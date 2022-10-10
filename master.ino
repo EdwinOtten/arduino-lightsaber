@@ -3,7 +3,7 @@
 #define DEBUG 1
 
 #ifdef DEBUG
-  #define DEBUG_PRINT(x)  Serial.println (x)
+  #define DEBUG_PRINT(x)  Serial.println (F(x))
 #else
   #define DEBUG_PRINT(x)
 #endif
@@ -14,6 +14,7 @@ int btnState = 0;
 int btnCount = 0;
 long btnLastPressed = 0;
 
+const int numberOfModes = 3;
 byte mode = 0;
 
 
@@ -55,19 +56,19 @@ void handleBtnPress()
     {
       case 1:
         DEBUG_PRINT("single press");
-      	sendMode(1);
+      	sendMode(0);
         break;
       case 2:
         DEBUG_PRINT("double press");
-      	sendMode(2);
+      	sendMode(1);
         break;
       case 3:
         DEBUG_PRINT("triple press");
-      	sendMode(3);
+      	sendMode(2);
         break;
       case 4:
         DEBUG_PRINT("quad press");
-      	sendMode(4);
+      	sendMode(3);
         break;
     }
 }
