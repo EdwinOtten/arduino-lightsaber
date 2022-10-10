@@ -214,8 +214,6 @@ void rainbow() {
   unsigned char r = 250;
   unsigned char g = 0;
   unsigned char b = 0;
-
-  unsigned long startt = millis();
   
   while (!modeChanged)
   {
