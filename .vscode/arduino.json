@@ -1,5 +1,6 @@
 {
-    "port": "/dev/tty.usbmodem144101",
-    "board": "arduino:avr:uno",
-    "sketch": "arduino-sketchbooks/main-controller/main-controller.ino"
+    "port": "/dev/tty.usbserial-1430",
+    "board": "arduino:avr:nano",
+    "sketch": "arduino-sketchbooks/led-controller/led-controller.ino",
+    "configuration": "cpu=atmega328old"
 }
