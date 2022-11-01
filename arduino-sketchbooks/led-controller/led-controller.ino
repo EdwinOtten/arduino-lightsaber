@@ -362,7 +362,7 @@ float getFlickerMultiplier()
   if (saberFlickerDisabled)
     return 1.0f;
   else
-    return random(9, 16) * 0.1f;
+    return random(8, 10) * 0.1f;
 }
 
 void saberLoop()
