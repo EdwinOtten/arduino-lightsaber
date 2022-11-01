@@ -28,6 +28,8 @@ int btnState = 0;
 int btnCount = 0;
 long btnLastPressed = 0;
 
+unsigned long debounceDuration = 50; // millis
+
 byte mode = 0;
 
 void setup()
@@ -36,7 +38,7 @@ void setup()
 	{
 		Serial.begin(9600);
 	}
-	pinMode(BUTTON_PIN, INPUT);
+	pinMode(BUTTON_PIN, INPUT_PULLUP);
 	pinMode(LED_BUILTIN, OUTPUT);
 	Wire.begin(); // join i2c bus (address optional for master)
 	DEBUG_PRINT("setup complete");
@@ -44,6 +46,10 @@ void setup()
 
 void loop()
 {
+  if (millis() - btnLastPressed < debounceDuration) {
+    return;
+  }
+  
 	int newState = digitalRead(BUTTON_PIN);
 
 	if (newState != btnState)
