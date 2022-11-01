@@ -29,11 +29,11 @@ bool newModeAvailable = false;
 
 // colors in R, G, B
 const uint8_t colors[5][3] = { 
-  { 10, 90, 180 }, // blue
-  { 180, 0, 0 }, // red
-  { 160, 0, 180 }, // purple
-  { 10, 200, 0 }, // green
-  { 180, 30, 0 }, // amber
+  { 14, 125, 255 }, // blue
+  { 255, 0, 0 }, // red
+  { 220, 0, 255 }, // purple
+  { 15, 255, 0 }, // green
+  { 255, 38, 0 }, // amber
 };
 uint8_t color[3] = { 0, 0, 0 };
 
@@ -44,7 +44,7 @@ uint8_t color[3] = { 0, 0, 0 };
 */
 
 // Change this to be at least as long as your pixel string (too long will work fine, just be a little slower)
-#define PIXELS 144  // Number of pixels in the string
+#define PIXELS 184  // Number of pixels in the string
 
 // These values depend on which pin your string is connected to and what board you are using 
 // More info on how to find these at http://www.arduino.cc/en/Reference/PortManipulation
@@ -238,43 +238,55 @@ void saberOff()
 void rainbow()
 {
   DEBUG_PRINT("Rainbow on");
-  unsigned char r = 250;
-  unsigned char g = 0;
-  unsigned char b = 0;
 
+  unsigned int i = 0;
   while (!newModeAvailable)
   {
+    unsigned char r = 250;
+    unsigned char g = 0;
+    unsigned char b = 0;
     cli();
-
-    sendPixel(r, g, b);
-    if (g == 250 && r > 0)
+    
+    unsigned int p = 0;
+    while (p < PIXELS + i)
     {
-      r -= 10;
-    }
-    if (r == 250 && g < 250 && b == 0)
-    {
-      g += 10;
-    }
-    if (r == 0 && g == 250 && b < 250)
-    {
-      b += 10;
-    }
-    if (b == 250 & g > 0)
-    {
-      g -= 10;
-    }
-    if (b == 250 && r < 250 && g == 0)
-    {
-      r += 10;
-    }
-    if (r == 250 && b > 0)
-    {
-      b -= 10;
+      if (g == 250 && r > 0)
+      {
+        r -= 10;
+      }
+      if (r == 250 && g < 250 && b == 0)
+      {
+        g += 10;
+      }
+      if (r == 0 && g == 250 && b < 250)
+      {
+        b += 10;
+      }
+      if (b == 250 & g > 0)
+      {
+        g -= 10;
+      }
+      if (b == 250 && r < 250 && g == 0)
+      {
+        r += 10;
+      }
+      if (r == 250 && b > 0)
+      {
+        b -= 10;
+      }
+      
+      if (p >= i)
+      {
+        sendPixel(r, g, b);
+      }
+      
+      p++;
     }
 
     sei();
     show();
-    delay(PIXELS / 1.4);
+    delay(10);
+    i++;
   }
 }
 
@@ -414,6 +426,7 @@ void loop()
 
     bool onOff = BIT_CHECK(mode, 7);
     bool newOnOff = BIT_CHECK(newMode, 7);
+    bool rainbowOn = BIT_CHECK(newMode, 5);
     int t = BITMASK_CHECK_ANY(newMode, 0x0F);
     DEBUG_PRINT(String(t));
     color[0] = colors[t][0];
@@ -421,16 +434,25 @@ void loop()
     color[2] = colors[t][2];
 
     mode = newMode;
-    if (newOnOff != onOff) // if on/off state has changed
+    if (rainbowOn)
     {
-      if (newOnOff)
-        saberOn();
-      else 
-        saberOff();
+      rainbow();
     }
-
-    if (newOnOff) // if saber is on
-      saberLoop();
+    else 
+    {
+      if (newOnOff != onOff) // if on/off state has changed
+      {
+        if (newOnOff)
+          saberOn();
+        else 
+          saberOff();
+      }
+  
+      if (newOnOff) // if saber is on
+        saberLoop();
+      else
+        showColor(0,0,0);
+    }
   }
   else
   {

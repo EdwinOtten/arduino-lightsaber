@@ -71,6 +71,8 @@ void loop()
 
 void handleBtnPress(int buttonPressed)
 {
+  BIT_CLEAR(mode, 5);
+      
 	switch (buttonPressed)
 	{
 		case 0:
@@ -107,8 +109,7 @@ void handleBtnPress(int buttonPressed)
 		default:
 		{
 			DEBUG_PRINT("quad press");
-			BITMASK_CLEAR(mode, 0x0F);
-			BITMASK_SET(mode, 0x0F);
+      BIT_SET(mode, 5);
 		}
 		break;
 	}
