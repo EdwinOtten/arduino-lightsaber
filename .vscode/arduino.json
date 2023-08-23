@@ -1,5 +1,5 @@
 {
-    "port": "/dev/tty.usbserial-1430",
+    "port": "/dev/tty.usbserial-14310",
     "board": "arduino:avr:nano",
     "sketch": "arduino-sketchbooks/led-controller/led-controller.ino",
     "configuration": "cpu=atmega328old"

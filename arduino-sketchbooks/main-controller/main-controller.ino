@@ -135,3 +135,46 @@ void sendByte(byte byte)
 	delay(300);
 	digitalWrite(LED_BUILTIN, LOW);
 }
+
+
+
+// #include "Wire.h"
+// #include <MPU6050_light.h>
+
+// MPU6050 mpu(Wire);
+
+// unsigned long timer = 0;
+
+// void setup() {
+//   Serial.begin(9600);
+//   Wire.begin();
+  
+//   byte status = mpu.begin();
+//   Serial.print(F("MPU6050 status: "));
+//   Serial.println(status);
+//   while(status!=0){ } // stop everything if could not connect to MPU6050
+//   mpu.setGyroOffsets(0.03,-0.02,0.00);
+//   mpu.setAccOffsets(0,0,1);
+//   mpu.setFilterGyroCoef(0.98);
+// }
+
+// void loop() {
+//   mpu.update();
+
+//   float gyroX = mpu.getGyroX();
+//   float gyroY = mpu.getGyroY();
+//   float gyroZ = mpu.getGyroZ();
+
+//   if (gyroX < -100 || gyroX > 100) {
+//     Serial.print("Gyro acceleration on X axis: ");
+//     Serial.println(gyroX);
+//   }
+//   if (gyroY < -100 || gyroY > 100) {
+//     Serial.print("Gyro acceleration on Y axis: ");
+//     Serial.println(gyroY);
+//   }
+//   if (gyroZ < -100 || gyroZ > 100) {
+//     Serial.print("Gyro acceleration on Z axis: ");
+//     Serial.println(gyroZ);
+//   }
+// }
